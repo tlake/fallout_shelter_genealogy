@@ -73,4 +73,15 @@
 
 
 <template name="dwellers_list">
+  <ul>
+    <p>There ought to be dwellers below.</p>
+    {{#each dwellers}}
+      {{> dweller}}
+    {{/each}}
+  </ul>
+</template>
+
+
+<template name="dweller">
+  <li>{{first_name}}</li>
 </template>

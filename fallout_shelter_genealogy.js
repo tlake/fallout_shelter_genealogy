@@ -10,7 +10,11 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
 
-  Template.control_panel.helpers({
+  Template.body.helpers({
+    dwellers: function() {
+      return Dwellers.find({});
+    },
+
   });
 
   Template.control_panel.events({
@@ -43,6 +47,10 @@ if (Meteor.isClient) {
 
       form = {};
 
+      form.owner = Meteor.userId();
+
+      form.username = Meteor.user().username;
+
       form.type = $("#dweller_type").val();
 
       $.each($("#form_new_dweller").serializeArray(), function () {
@@ -50,6 +58,8 @@ if (Meteor.isClient) {
       });
 
       console.log(form);
+
+      Dwellers.insert(form);
 
       $("#dweller_information").children().each(function() {
         $(this.value = "");
