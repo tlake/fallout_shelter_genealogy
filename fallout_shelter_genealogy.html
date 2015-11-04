@@ -1,0 +1,76 @@
+<head>
+  <title>fallout_shelter_genealogy</title>
+</head>
+
+
+<body>
+  <h1>Vault-Tec's Genealogical History Application</h1>
+  <h2>Assisting overseers in understanding the familial
+    history of their vaults and in preventing incest of
+    an undesired nature.</h2>
+
+  {{#unless currentUser}}
+    {{> anon_header}}
+  {{else}}
+    {{> authn_header}}
+    {{> main_content}}
+  {{/unless}}
+
+</body>
+
+
+<template name="anon_header">
+  <h3>Enter your Overseer credentials.</h3>
+  {{> loginButtons}}
+</template>
+
+
+<template name="authn_header">
+  <h3>Welcome, Overseer!</h3>
+  {{> loginButtons}}
+</template>
+
+
+<template name="main_content">
+  {{> control_panel}}
+  {{> dwellers_list}}
+</template>
+
+
+<template name="control_panel">
+  <h4>Control Panel</h4>
+
+  <button id="btn_new_dweller">Add New Dweller</button>
+
+  {{> add_dweller}}
+</template>
+
+
+<template name="add_dweller">
+  <form id="form_new_dweller" class="hide">
+    <label>
+      Dweller Type:
+      <select id="dweller_type">
+        <option value="bred" selected>Bred</option>
+        <option value="radio">Radio</option>
+        <option value="lunchbox">Lunchbox</option>
+        <option value="initial">Initial</option>
+      </select>
+    </label>
+
+    <label id="dweller_information">
+      Dweller Information
+      <input class="dweller_parents" type="text" name="first_parent" placeholder="First Parent" />
+      <input class="dweller_parents" type="text" name="second_parent" placeholder="Second Parent" />
+      <input type="text" name="first_name" placeholder="First Name" />
+      <input type="text" name="last_name" placeholder="Last Name" />
+    </label>
+
+    <button id="btn_new_dweller_submit" type="submit" name="submit" value="submit">Submit</button>
+    <button id="btn_new_dweller_cancel">Cancel</button>
+  </form>
+</template>
+
+
+<template name="dwellers_list">
+</template>
