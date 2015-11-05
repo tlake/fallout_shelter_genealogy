@@ -1,6 +1,7 @@
 Dwellers = new Mongo.Collection("dwellers");
 
 
+
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
@@ -8,14 +9,16 @@ if (Meteor.isServer) {
 }
 
 
+
 if (Meteor.isClient) {
 
-  Template.body.helpers({
+  Template.dwellers_list.helpers({
     dwellers: function() {
       return Dwellers.find({});
     },
 
   });
+
 
   Template.control_panel.events({
     "click #btn_new_dweller": function (event) {
@@ -67,6 +70,14 @@ if (Meteor.isClient) {
     },
 
   });
+
+
+  Template.dweller.events({
+    "click .delete": function() {
+      Dwellers.remove(this._id);
+    },
+  });
+
 
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"

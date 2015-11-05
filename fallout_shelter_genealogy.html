@@ -73,8 +73,8 @@
 
 
 <template name="dwellers_list">
-  <ul>
-    <p>There ought to be dwellers below.</p>
+  <h4>Dwellers In This Vault:</h4>
+    <ul>
     {{#each dwellers}}
       {{> dweller}}
     {{/each}}
@@ -83,5 +83,10 @@
 
 
 <template name="dweller">
-  <li>{{first_name}}</li>
+  <li>
+    <span class="dweller_display">
+      {{first_name}} {{last_name}}: {{type}} dweller
+    </span>
+    <button class="delete">&times;</button>
+  </li>
 </template>
