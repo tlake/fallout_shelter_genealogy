@@ -3,6 +3,7 @@
 </head>
 
 
+
 <body>
   <h1>Vault-Tec's Genealogical History Application</h1>
   <h2>Assisting overseers in understanding the familial
@@ -15,8 +16,8 @@
     {{> authn_header}}
     {{> main_content}}
   {{/unless}}
-
 </body>
+
 
 
 <template name="anon_header">
@@ -25,10 +26,12 @@
 </template>
 
 
+
 <template name="authn_header">
   <h3>Welcome, Overseer!</h3>
   {{> loginButtons}}
 </template>
+
 
 
 <template name="main_content">
@@ -37,16 +40,47 @@
 </template>
 
 
+
 <template name="control_panel">
   <h4>Control Panel</h4>
 
-  <button id="btn_new_dweller">Add New Dweller</button>
-
-  {{> add_dweller}}
+  {{> vault_controls}}
+  {{> dweller_controls}}
 </template>
 
 
-<template name="add_dweller">
+
+<template name="vault_controls">
+  <label>Vault No.
+    <select id="select_vault">
+      <option value=""></option>
+      {{#each vaults}}
+        {{#if isSelectedVault vault_id}}
+          <option value={{vault_id}} selected>{{vault_id}}</option>
+        {{else}}
+          <option value={{vault_id}}>{{vault_id}}</option>
+        {{/if}}
+      {{/each}}
+    </select>
+  </label>
+
+  <button class="delete" id="btn_del_vault">Delete Vault</button>
+
+  <button id="btn_new_vault">New Vault</button>
+
+  <form id="form_new_vault" class="hide">
+    <input id="ipt_new_vault" type="text" name="new_vault" placeholder="New Vault" />
+
+    <button id="btn_new_vault_submit" type="submit" name="submit" value="submit">Submit</button>
+    <button id="btn_new_vault_cancel">Cancel</button>
+  </form>
+</template>
+
+
+
+<template name="dweller_controls">
+  <button id="btn_new_dweller">Add New Dweller</button>
+
   <form id="form_new_dweller" class="hide">
     <label>
       Dweller Type:
@@ -60,8 +94,16 @@
 
     <label id="dweller_information">
       Dweller Information
-      <input class="dweller_parents" type="text" name="first_parent" placeholder="First Parent" />
-      <input class="dweller_parents" type="text" name="second_parent" placeholder="Second Parent" />
+      <select id="first_parent" class="dweller_parents">
+        {{#each dwellers}}
+          <option value="{{this._id}}">{{first_name}} {{last_name}}</option>
+        {{/each}}
+      </select>
+      <select id="second_parent" class="dweller_parents">
+        {{#each dwellers}}
+          <option value="{{this._id}}">{{first_name}} {{last_name}}</option>
+        {{/each}}
+      </select>
       <input type="text" name="first_name" placeholder="First Name" />
       <input type="text" name="last_name" placeholder="Last Name" />
     </label>
@@ -72,21 +114,18 @@
 </template>
 
 
+
 <template name="dwellers_list">
   <h4>Dwellers In This Vault:</h4>
     <ul>
     {{#each dwellers}}
-      {{> dweller}}
+      <li>
+        <span class="dweller_display">
+          {{first_name}} {{last_name}}: {{type}} dweller
+        </span>
+        <button class="delete">&times;</button>
+      </li>
     {{/each}}
   </ul>
 </template>
 
-
-<template name="dweller">
-  <li>
-    <span class="dweller_display">
-      {{first_name}} {{last_name}}: {{type}} dweller
-    </span>
-    <button class="delete">&times;</button>
-  </li>
-</template>
